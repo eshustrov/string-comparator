@@ -9,17 +9,32 @@ public class StringWithNumbersComparatorTest {
     private final StringWithNumbersComparator comparator = new StringWithNumbersComparator();
 
     @Test
+    public void nullStrings() {
+        assertThat(comparator.compare(null, null), is(0));
+    }
+
+    @Test
+    public void lowerNullString() {
+        assertThat(comparator.compare(null, ""), is(-1));
+    }
+
+    @Test
+    public void higherNonNullString() {
+        assertThat(comparator.compare("", null), is(1));
+    }
+
+    @Test
     public void emptyStrings() {
         assertThat(comparator.compare("", ""), is(0));
     }
 
     @Test
-    public void shorterStrings() {
+    public void shorterString() {
         assertThat(comparator.compare("", "a"), is(-1));
     }
 
     @Test
-    public void longerStrings() {
+    public void longerString() {
         assertThat(comparator.compare("a", ""), is(1));
     }
 
