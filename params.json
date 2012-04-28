@@ -1,0 +1,1 @@
+{"name":"string-comparator","body":"**StringWithNumbersComparator** class finds numbers inside a string and compare those numbers by value, not alphabetically, while non-number parts of the string are compared alphabetically.","tagline":"String Comparator","google":"","note":"Don't delete this file! It's used internally to help with page regeneration."}
