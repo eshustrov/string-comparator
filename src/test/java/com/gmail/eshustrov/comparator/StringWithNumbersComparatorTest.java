@@ -82,4 +82,9 @@ public class StringWithNumbersComparatorTest {
     public void higherNumber() {
         assertThat(comparator.compare("10", "2"), is(1));
     }
+
+    @Test
+    public void imageFileNames() {
+        assertThat(comparator.compare("Image_938.jpeg", "Image_1072.jpeg"), is(-1));
+    }
 }

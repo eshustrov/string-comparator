@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringWithNumbersComparator implements Comparator<String> {
-    private final Pattern PATTERN = Pattern.compile("(\\D*)(\\d*)");
+    private static final Pattern PATTERN = Pattern.compile("(\\D*)(\\d*)");
 
     @Override
     public int compare(final String one, final String another) {
