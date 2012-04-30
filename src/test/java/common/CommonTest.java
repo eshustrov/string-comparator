@@ -86,7 +86,7 @@ public abstract class CommonTest {
     @Test
     public void speed() {
         final long timeStart = System.nanoTime();
-        comparator.compare("abcde01234fgh567ij89", "abcde01234fgh567ij89");
+        comparator.compare("abcde01234fgh567ij89", "abcde01234fgh567ij88");
         final long timeStop = System.nanoTime();
         System.out.println(comparator.getClass().getCanonicalName() + ": " + (timeStop - timeStart) + " nanoseconds");
     }
