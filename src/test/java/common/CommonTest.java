@@ -82,4 +82,12 @@ public abstract class CommonTest {
     public void imageFileNames() {
         assertThat(comparator.compare("Image_938.jpeg", "Image_1072.jpeg"), is(-1));
     }
+
+    @Test
+    public void speed() {
+        final long timeStart = System.nanoTime();
+        comparator.compare("abcde01234fgh567ij89", "abcde01234fgh567ij89");
+        final long timeStop = System.nanoTime();
+        System.out.println(comparator.getClass().getCanonicalName() + ": " + (timeStop - timeStart) + " nanoseconds");
+    }
 }
