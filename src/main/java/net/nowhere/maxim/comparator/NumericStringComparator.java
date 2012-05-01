@@ -10,6 +10,7 @@ public class NumericStringComparator implements Comparator<String> {
         }
 
         for (int index = 0; index < o1.length() && index < o2.length(); index++) {
+
             if (Character.isDigit(o1.charAt(index)) && Character.isDigit(o2.charAt(index))) {
                 int numberWeight1 = getNumericWeight(o1, index);
                 int numberWeight2 = getNumericWeight(o2, index);
@@ -18,9 +19,9 @@ public class NumericStringComparator implements Comparator<String> {
                         return compare(o1.substring(index + 1), o2.substring(index + 1));
                     return o1.compareTo(o2);
                 }
-                return numberWeight1 - numberWeight2;
+                return Integer.valueOf(numberWeight1).compareTo(numberWeight2);
             } else {
-                int result = (int) o1.charAt(index) - (int) o2.charAt(index);
+                int result = Character.valueOf(o1.charAt(index)).compareTo(o2.charAt(index));
                 if (result == 0) {
                     result = compare(o1.substring(index + 1), o2.substring(index + 1));
                 }
@@ -37,7 +38,7 @@ public class NumericStringComparator implements Comparator<String> {
         }
         int offset = 0;
         int factor = 1;
-        while (Character.isDigit(stringWithNumbers.charAt(index + offset))) {
+        while (stringWithNumbers.length() > (index + offset)  && Character.isDigit(stringWithNumbers.charAt(index + offset))) {
             offset++;
         }
         while (offset > 1) {
