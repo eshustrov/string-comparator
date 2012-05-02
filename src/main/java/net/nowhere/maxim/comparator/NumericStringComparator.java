@@ -1,6 +1,7 @@
 package net.nowhere.maxim.comparator;
 
 import java.util.Comparator;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NumericStringComparator implements Comparator<String> {
     @Override
@@ -8,43 +9,48 @@ public class NumericStringComparator implements Comparator<String> {
         if (o1.equals(o2) || o1.contentEquals(o2)) {
             return 0;
         }
+        int minStringLength;
+        if(o1.length() <= o2.length())
+        {
+            minStringLength = o1.length();
+        }
+        else {
+            minStringLength = o2.length();
+        }
 
-        for (int index = 0; index < o1.length() && index < o2.length(); index++) {
+        for (AtomicInteger index = new AtomicInteger(0); index.get() < minStringLength; index.incrementAndGet()) {
 
-            if (Character.isDigit(o1.charAt(index)) && Character.isDigit(o2.charAt(index))) {
-                int numberWeight1 = getNumericWeight(o1, index);
-                int numberWeight2 = getNumericWeight(o2, index);
-                if (numberWeight1 == numberWeight2) {
-                    if (index + 1 < o1.length() && index + 1 < o2.length())
-                        return compare(o1.substring(index + 1), o2.substring(index + 1));
-                    return o1.compareTo(o2);
+            if (Character.isDigit(o1.charAt(index.get())) && Character.isDigit(o2.charAt(index.get()))) {
+                int initIndex1 = index.get();
+                int numberWeight1 = getNumberFromString(o1, index);
+                int numberWeight2 = getNumberFromString(o2, new AtomicInteger(initIndex1));
+                if (numberWeight1 != numberWeight2)
+                {
+                    return numberWeight1 > numberWeight2 ? 1 : -1;
                 }
-                return Integer.valueOf(numberWeight1).compareTo(numberWeight2);
-            } else {
-                int result = Character.valueOf(o1.charAt(index)).compareTo(o2.charAt(index));
-                if (result == 0) {
-                    result = compare(o1.substring(index + 1), o2.substring(index + 1));
+            }
+            else
+            {
+                int result = Character.valueOf(o1.charAt(index.get())).compareTo(o2.charAt(index.get()));
+                if(result != 0)
+                {
+                    return result;
                 }
-                return result;
             }
         }
         return o1.compareTo(o2);
     }
 
-    private int getNumericWeight(String stringWithNumbers, int index) {
-        int value = Integer.parseInt(stringWithNumbers.substring(index, index + 1));
-        if (value == 0) {
-            return value;
+    private int getNumberFromString(String stringWithNumbers, java.util.concurrent.atomic.AtomicInteger index)
+    {
+        int begin = index.intValue();
+        int stringLength = stringWithNumbers.length();
+        while(Character.isDigit(stringWithNumbers.charAt(index.get()))){
+            int indexValue =  index.incrementAndGet();
+            if( stringLength <= indexValue) break;
         }
-        int offset = 0;
-        int factor = 1;
-        while (stringWithNumbers.length() > (index + offset)  && Character.isDigit(stringWithNumbers.charAt(index + offset))) {
-            offset++;
-        }
-        while (offset > 1) {
-            factor *= 10;
-            offset--;
-        }
-        return factor * value;
+
+        return Integer.parseInt(stringWithNumbers.substring(begin,index.intValue()));
     }
+
 }
