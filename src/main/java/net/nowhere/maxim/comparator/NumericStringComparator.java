@@ -46,8 +46,7 @@ public class NumericStringComparator implements Comparator<String> {
         int begin = index.intValue();
         int stringLength = stringWithNumbers.length();
         while(Character.isDigit(stringWithNumbers.charAt(index.get()))){
-            int indexValue =  index.incrementAndGet();
-            if( stringLength <= indexValue) break;
+             if( stringLength <= index.incrementAndGet()) break;
         }
 
         return Integer.parseInt(stringWithNumbers.substring(begin,index.intValue()));
