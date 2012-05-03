@@ -1,8 +1,8 @@
 package com.gmail.eshustrov.comparator;
 
-import common.CommonTest;
+import common.ExtendedTest;
 
-public class StringWithNumbersFastComparatorTest extends CommonTest {
+public class StringWithNumbersFastComparatorTest extends ExtendedTest {
     public StringWithNumbersFastComparatorTest() {
         super(new StringWithNumbersFastComparator());
     }
