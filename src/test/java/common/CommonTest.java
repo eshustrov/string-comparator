@@ -49,13 +49,33 @@ public abstract class CommonTest {
     }
 
     @Test
-    public void lowerStringByNumber() {
+    public void lowerStringByNumberAtEnd() {
         assertThat(comparator.compare("a2", "a10"), is(-1));
     }
 
     @Test
-    public void lowerStringNotByNumber() {
+    public void lowerStringByNumberInside() {
+        assertThat(comparator.compare("a3b", "a7b"), is(-1));
+    }
+
+    @Test
+    public void longerStringByNumberInside() {
+        assertThat(comparator.compare("a20b", "a3b"), is(1));
+    }
+
+    @Test
+    public void lowerStringNotByNumberAtEnd() {
         assertThat(comparator.compare("a10", "b2"), is(-1));
+    }
+
+    @Test
+    public void longerStringButLowerByNumberInside() {
+        assertThat(comparator.compare("a1c", "a8"), is(-1));
+    }
+
+    @Test
+    public void shorterStringButHigherByNumberInside() {
+        assertThat(comparator.compare("a7", "a4e"), is(1));
     }
 
     @Test
@@ -87,6 +107,7 @@ public abstract class CommonTest {
     public void speed() {
         final long timeStart = System.nanoTime();
         comparator.compare("abcde01234fgh567ij89", "abcde01234fgh567ij88");
+        comparator.compare("abcde01234fgh567ij89k", "abcde01234fgh567ij89l");
         final long timeStop = System.nanoTime();
         System.out.println(comparator.getClass().getCanonicalName() + ": " + (timeStop - timeStart) + " nanoseconds");
     }
